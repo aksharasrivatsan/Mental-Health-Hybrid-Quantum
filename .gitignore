@@ -1,0 +1,8 @@
+.venv/
+.matplotlib/
+__pycache__/
+*.pyc
+vgg16_fine_tuned_accuracy.png
+vgg16_quantum_accuracy.png
+vgg16_fine_tuned_quantum_accuracy.png
+vgg16_quantum_quick_check.png

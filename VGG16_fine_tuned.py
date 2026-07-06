@@ -1,61 +1,29 @@
-import tensorflow as tf
-from tensorflow.keras import layers, models, applications
-import matplotlib.pyplot as plt
+import argparse
 
-IMG_SIZE = (224, 224)
-BATCH_SIZE = 32
-DATA_DIR = "/content/mfcc_images"
+from hybrid_quantum_tf import add_common_training_args, run_training
 
-train_ds = tf.keras.utils.image_dataset_from_directory(
-    DATA_DIR + "/train",
-    image_size=IMG_SIZE,
-    batch_size=BATCH_SIZE,
-    label_mode='int'
-)
 
-val_ds = tf.keras.utils.image_dataset_from_directory(
-    DATA_DIR + "/validation",
-    image_size=IMG_SIZE,
-    batch_size=BATCH_SIZE,
-    label_mode='int'
-)
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Fine-tune VGG16 block 5 with a PennyLane quantum layer on MFCC image folders."
+    )
+    return add_common_training_args(
+        parser,
+        default_epochs=30,
+        default_learning_rate=0.00001,
+        default_plot_path="vgg16_fine_tuned_quantum_accuracy.png",
+    ).parse_args()
 
-base_model = applications.VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-base_model.trainable = True
 
-for layer in base_model.layers:
-    if 'block5_' in layer.name:
-        layer.trainable = True
-    else:
-        layer.trainable = Falseṣ
+def main():
+    args = parse_args()
+    print("Training the Hybrid Quantum Fine-Tuned VGG16 model...")
+    run_training(
+        args,
+        fine_tune_block5=True,
+        title="Hybrid Quantum VGG16 Block 5 Fine-Tuning Results",
+    )
 
-model = models.Sequential([
-    base_model,
-    layers.GlobalAveragePooling2D(),
-    layers.Dense(512, activation='relu'),
-    layers.BatchNormalization(),
-    layers.Dropout(0.3),
-    layers.Dense(6, activation='softmax')
-])
 
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=0.00001),
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
-
-print("Training the Purely Classical Fine-Tuned VGG16 (Block 5 Awake)...")
-history = model.fit(train_ds, validation_data=val_ds, epochs=30)
-
-%matplotlib inline
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
-epochs_range = range(len(acc))
-
-plt.figure(figsize=(8, 5))
-plt.plot(epochs_range, acc, label='Fine-Tuned Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Fine-Tuned Validation Accuracy')
-plt.title('VGG16 (Block 5 Fine-Tuning) Classical Results')
-plt.legend()
-plt.grid(True)
-plt.show()
+if __name__ == "__main__":
+    main()
