@@ -1,7 +1,6 @@
 import argparse
 
-from hybrid_quantum_tf import add_common_training_args, run_training
-
+from hybrid_metrics import add_common_training_args, run_training
 
 def parse_args():
     parser = argparse.ArgumentParser(
