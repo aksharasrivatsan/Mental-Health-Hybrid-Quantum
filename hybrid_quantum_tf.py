@@ -200,5 +200,8 @@ def run_training(args, *, fine_tune_block5, title):
 
     model.summary()
     history = model.fit(train_ds, validation_data=val_ds, epochs=args.epochs)
+    model_path = args.plot_path.with_suffix(".h5")
+    model.save(model_path)
+    print(f"Saved trained model to: {model_path}")
     save_accuracy_plot(history, args.plot_path, title)
     return history
