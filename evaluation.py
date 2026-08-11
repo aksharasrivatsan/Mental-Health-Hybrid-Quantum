@@ -210,3 +210,7 @@ if __name__ == "__main__":
     
     # Compare models
     compare_models(results)
+
+ import pickle
+    with open("results/results.pkl", "wb") as f:
+        pickle.dump(results, f)
