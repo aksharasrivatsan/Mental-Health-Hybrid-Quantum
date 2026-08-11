@@ -11,6 +11,7 @@ from pathlib import Path
 import pickle
 import tensorflow as tf
 from hybrid_quantum_tf import load_image_datasets
+from hybrid_quantum_tf import QuantumCircuitLayer
 
 EMOTION_MAP = {
     0: "Anger",
