@@ -194,8 +194,7 @@ if __name__ == "__main__":
     
     # 2. Evaluate Pure VGG16
     print("\nLoading Pure VGG16 Model...")
-    from baseline_models import train_pure_vgg16
-    vgg16_model, _ = train_pure_vgg16(data_dir, epochs=30)
+    vgg16_model = tf.keras.models.load_model("baseline_models/vgg16_pure.h5")
     results['Pure VGG16'] = evaluate_model(vgg16_model, test_ds, "Pure VGG16")
     plot_confusion_matrix(
         results['Pure VGG16']['y_true'],
