@@ -1,0 +1,75 @@
+VGG16 BASELINE RESULTS
+======================
+
+Dataset:
+CREMA-D + TESS + RAVDESS
+
+Total samples:
+13,122
+
+Train samples:
+10,494
+
+Validation samples:
+1,314
+
+Test samples:
+1,314
+
+Number of classes:
+8
+
+Classes:
+Anger
+Calm
+Disgust
+Fear
+Happiness
+Neutral
+Sadness
+Surprise
+
+
+Training Configuration:
+-----------------------
+Model: VGG16
+Batch size: 16
+Epochs: 10
+Learning rate: 0.0001
+Weight decay: 0.0001
+Optimizer: Adam
+Device: NVIDIA GeForce RTX 3060 Laptop GPU
+
+
+Best Validation Results:
+------------------------
+Best epoch: 4
+Best validation loss: 0.8247
+Best validation accuracy: 68.11%
+
+
+Final Test Results:
+-------------------
+Test loss: 0.8409
+Test accuracy: 66.74%
+Correct predictions: 877 / 1314
+
+
+Classification Metrics:
+------------------------
+Macro precision: 69.96%
+Macro recall: 69.64%
+Macro F1-score: 68.89%
+
+Weighted precision: 67.12%
+Weighted recall: 66.74%
+Weighted F1-score: 66.00%
+
+
+Checkpoint:
+-----------
+models/vgg16_best.pth
+
+Confusion Matrix:
+-----------------
+models/vgg16_confusion_matrix.png

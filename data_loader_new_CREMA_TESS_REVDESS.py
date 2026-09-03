@@ -204,20 +204,21 @@ def tess_emotion_from_folder(folder_name):
 
 def collect_tess_records(tess_dir):
     records = []
-    
+
     if not tess_dir.exists():
         return records
 
-    # Iterates over all subdirectories inside tess_dir dynamically
-    for folder in sorted(tess_dir.iterdir()):
-        if folder.is_dir():
-            emotion = tess_emotion_from_folder(folder.name)
-            if emotion is None:
-                continue
+    # Search recursively because the TESS archive contains
+    # an additional top-level directory.
+    for audio_path in sorted(tess_dir.rglob("*")):
+        if not audio_path.is_file() or audio_path.suffix.lower() not in AUDIO_EXTENSIONS:
+            continue
 
-            for audio_path in sorted(folder.rglob("*")):
-                if audio_path.is_file() and audio_path.suffix.lower() in AUDIO_EXTENSIONS:
-                    records.append(AudioRecord(audio_path, emotion, "TESS"))
+        emotion = tess_emotion_from_folder(audio_path.parent.name)
+        if emotion is None:
+            continue
+
+        records.append(AudioRecord(audio_path, emotion, "TESS"))
 
     return records
 
