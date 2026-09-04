@@ -14,7 +14,7 @@ MODEL_DIR = Path("models")
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 
-NUM_EPOCHS = 30
+NUM_EPOCHS = 20
 LEARNING_RATE = 0.00001
 
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
